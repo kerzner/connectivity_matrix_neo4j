@@ -138,8 +138,8 @@ for line in file:
         fl_cancelled_index = keys.index("CANCELLED")
         fl_airtime_index = keys.index("AIR_TIME")
         fl_distance_index = keys.index("DISTANCE")
-        fl_dep_time_index = keys.index("ARR_TIME")
-        fl_arr_time_index = keys.index("DEP_TIME")
+        fl_dep_time_index = keys.index("DEP_TIME")
+        fl_arr_time_index = keys.index("ARR_TIME")
         fl_dep_delay_index = keys.index("DEP_DELAY")
         continue
 
