@@ -5,12 +5,12 @@ import tulippaths as tp
 neo.authenticate('localhost:7474', 'neo4j', 'neo')
 neo_graph = neo.Graph('http://localhost:7474/db/data')
 
-neo_graph.delete_all()
-tulip_graph = tlp.loadGraph("data/network.tlp")
+#neo_graph.delete_all()
+tulip_graph = tlp.loadGraph("data/network-rc1-20171101.tlp")
 
 hull_dict = {}
 locations_dict = {}
-attribute_file = open("data/test.txt")
+attribute_file = open("data/rc1-metadata-20171101.txt")
 attribute_file.readline()
 for line in attribute_file:
     line = line.split(",")
@@ -64,11 +64,23 @@ for tulip_edge in tulip_graph.getEdges():
     edge_type = tulip_edge_type[tulip_edge]
     edge_linked_structures = tulip_linked_structures[tulip_edge]
     if (tulip_source in tulip_to_neo_dict.keys() and tulip_target in tulip_to_neo_dict.keys()):
+        source_id = int(tp.utils.getNodeId(tulip_source, tulip_graph))
+        target_id = int(tp.utils.getNodeId(tulip_target, tulip_graph))
+
         neo_source = tulip_to_neo_dict[tulip_source]
         neo_target = tulip_to_neo_dict[tulip_target]
 
+        if ((source_id == 5283 and target_id == 3679) or (source_id == 3679 and target_id == 5283)) and edge_type == 'Gap Junction':
+            print edge_type
+            print edge_linked_structures
+            print neo_source, "->", neo_target
+
         neo_edge = neo.Relationship(neo_source, "SYNAPSE", neo_target, type=edge_type,
                                     structures=edge_linked_structures, id=id)
+
+        if ((source_id == 5283 and target_id == 3679) or (source_id == 3679 and target_id == 5283)) and edge_type == 'Gap Junction':
+            print neo_edge
+
         neo_edges.append(neo_edge)
 
 items = tulip_to_neo_dict.values() + neo_edges
