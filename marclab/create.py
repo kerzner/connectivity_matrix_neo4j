@@ -5,12 +5,12 @@ import tulippaths as tp
 neo.authenticate('localhost:7474', 'neo4j', 'neo')
 neo_graph = neo.Graph('http://localhost:7474/db/data')
 
-#neo_graph.delete_all()
-tulip_graph = tlp.loadGraph("data/network-rc1-20171101.tlp")
+neo_graph.delete_all()
+tulip_graph = tlp.loadGraph("data/network-rc1-20170112.tlp")
 
 hull_dict = {}
 locations_dict = {}
-attribute_file = open("data/rc1-metadata-20171101.txt")
+attribute_file = open("data/attributes-rc1-20170112.txt")
 attribute_file.readline()
 for line in attribute_file:
     line = line.split(",")
@@ -25,13 +25,15 @@ tulip_to_neo_dict = {}
 for tulip_node in tulip_graph.getNodes():
 
     node_id = int(tp.utils.getNodeId(tulip_node, tulip_graph))
-    if node_id not in locations_dict.keys():
-        print node_id
-        continue
     node_type = tp.utils.getNodeType(tulip_node, tulip_graph)
 
-    node_locations = locations_dict[node_id]
-    node_hull = hull_dict[node_id]
+    if node_id in locations_dict.keys():
+        node_locations = locations_dict[node_id]
+        node_hull = hull_dict[node_id]
+    else:
+        node_locations = 1
+        node_hull = 1
+
     node_structure = tulip_structure[tulip_node]
 
     neo_node = neo.Node("CELL",
