@@ -72,17 +72,8 @@ for tulip_edge in tulip_graph.getEdges():
         neo_source = tulip_to_neo_dict[tulip_source]
         neo_target = tulip_to_neo_dict[tulip_target]
 
-        if ((source_id == 5283 and target_id == 3679) or (source_id == 3679 and target_id == 5283)) and edge_type == 'Gap Junction':
-            print edge_type
-            print edge_linked_structures
-            print neo_source, "->", neo_target
-
         neo_edge = neo.Relationship(neo_source, "SYNAPSE", neo_target, type=edge_type,
                                     structures=edge_linked_structures, id=id)
-
-        if ((source_id == 5283 and target_id == 3679) or (source_id == 3679 and target_id == 5283)) and edge_type == 'Gap Junction':
-            print neo_edge
-
         neo_edges.append(neo_edge)
 
 items = tulip_to_neo_dict.values() + neo_edges
