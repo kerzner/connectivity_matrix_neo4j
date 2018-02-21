@@ -93,7 +93,7 @@ for r in results:
 
 for tPath in tPaths:
     if not tPath.isSane():
-        print 'FUCK!'
+        print 'Bad path!'
 print 'generating matrix'
 matrix = tp.ConnectivityMatrix(g)
 matrix.activateFromPaths(tPaths)
