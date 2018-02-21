@@ -1,3 +1,5 @@
-# connectivity_matrix_neo4j
+# Graffinity Neo4j
 
-Scripts for creating neo4j databases from marclab and flights data
+Python scripts for creating neo4j databases from marclab and flights data
+
+The databases created with these scripts should be put into the \_data folder of the [graffinity_server](https://github.com/visdesignlab/graffinity_server).
